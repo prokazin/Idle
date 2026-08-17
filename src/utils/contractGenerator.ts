@@ -13,7 +13,6 @@ const contractTemplates = [
 ]
 
 export const generateContracts = (): Contract[] => {
-  // Выбираем 3 случайных разных контракта
   const shuffled = [...contractTemplates].sort(() => 0.5 - Math.random())
   const selected = shuffled.slice(0, 3).map((template, index) => {
     const difficultyMultiplier = {
@@ -33,7 +32,7 @@ export const generateContracts = (): Contract[] => {
       difficulty: template.difficulty,
       requirement,
       reward,
-      timeLimit: 60 * (multiplier * 2), // Время в секундах
+      timeLimit: 60 * (multiplier * 2),
       progress: new Decimal(0),
       completed: false,
       expired: false

@@ -30,7 +30,6 @@ export const loadGame = (): GameState | null => {
     if (!data) return null
 
     const parsed = JSON.parse(data)
-    // Восстанавливаем Decimal
     return {
       ...parsed,
       code: new Decimal(parsed.code),

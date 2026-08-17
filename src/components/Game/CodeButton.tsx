@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Decimal } from 'break_eternity.js'
 
 interface CodeButtonProps {
   onClick: () => void
@@ -23,8 +22,8 @@ const CodeButton: React.FC<CodeButtonProps> = ({ onClick, disabled = false }) =>
       disabled={disabled}
       className={`
         w-full py-6 px-8 text-2xl font-bold rounded-lg
-        bg-gradient-to-r from-cyber-purple to-cyber-blue
-        hover:shadow-lg hover:shadow-cyber-purple/50
+        bg-gradient-to-r from-[#7c3aed] to-[#3b82f6]
+        hover:shadow-lg hover:shadow-[#7c3aed]/50
         transition-all duration-200
         ${isPulsing ? 'scale-95' : 'scale-100'}
         ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}

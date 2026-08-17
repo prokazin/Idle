@@ -28,7 +28,7 @@ export const useGameLoop = () => {
     return () => clearInterval(interval)
   }, [isRunning])
 
-  const updateGame = (update: Partial<GameState> | ((state: GameState) => GameState)) => {
+  const updateGame = (update: any) => {
     setGameState(prev => {
       if (typeof update === 'function') {
         return update(prev)

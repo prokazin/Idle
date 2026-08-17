@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import MainLayout from './components/Layout/MainLayout'
 import CodeButton from './components/Game/CodeButton'
 import StatsPanel from './components/Game/StatsPanel'
@@ -12,20 +12,26 @@ import { useLocalStorage } from './hooks/useLocalStorage'
 import { buyUpgrade, acceptContract } from './utils/gameLogic'
 
 function App() {
-  const { user, initTelegram } = useTelegram()
+  const { user, isReady, initTelegram } = useTelegram()
   const { gameState, updateGame } = useGameLoop()
   const { loadGame, saveGame } = useLocalStorage()
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    // Инициализация Telegram
     initTelegram()
+    
+    // Загрузка сохранения
     const saved = loadGame()
     if (saved) {
       updateGame(saved)
     }
+    
+    setIsLoading(false)
   }, [])
 
   useEffect(() => {
-    if (gameState) {
+    if (gameState && !isLoading) {
       saveGame(gameState)
     }
   }, [gameState])
@@ -50,6 +56,15 @@ function App() {
     updateGame((prev: any) => acceptContract(prev, id))
   }
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#0a0a0f]">
+        <div className="text-[#7c3aed] text-xl animate-pulse">Загрузка...</div>
+      </div>
+    )
+  }
+
+  // Если нет пользователя - показываем страницу входа
   if (!user) {
     return <TelegramLogin />
   }

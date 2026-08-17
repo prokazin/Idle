@@ -18,7 +18,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Стили для скроллбара */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -37,7 +36,6 @@ body {
   background: #6d28d9;
 }
 
-/* Анимации */
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
@@ -54,11 +52,4 @@ body {
 
 .animate-glitch:hover {
   animation: glitch 0.3s ease-in-out;
-}
-
-/* Кириллица в моноширинном стиле */
-@font-face {
-  font-family: 'JetBrains Mono';
-  src: local('JetBrains Mono'), local('Courier New');
-  font-display: swap;
 }

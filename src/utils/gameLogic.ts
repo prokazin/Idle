@@ -1,26 +1,29 @@
-import { Decimal } from 'break_eternity.js'
-import { GameState, Upgrade, Contract } from '../types/game.types'
+import Decimal from 'break_eternity.js'
+import { GameState } from '../types/game.types'
 import { generateContracts } from './contractGenerator'
 
-export const createInitialState = (): GameState => ({
-  code: new Decimal(0),
-  totalCode: new Decimal(0),
-  clickPower: new Decimal(1),
-  codePerSecond: new Decimal(0),
-  prestigePoints: new Decimal(0),
-  prestigeMultiplier: new Decimal(1),
-  upgrades: [],
-  contracts: generateContracts(),
-  achievements: [],
-  stats: {
-    totalClicks: 0,
-    totalTime: 0,
-    maxCodePerSecond: new Decimal(0),
-    contractsCompleted: 0,
-    prestigeCount: 0
-  },
-  lastSave: Date.now()
-})
+export const createInitialState = (): GameState => {
+  const contracts = generateContracts()
+  return {
+    code: new Decimal(0),
+    totalCode: new Decimal(0),
+    clickPower: new Decimal(1),
+    codePerSecond: new Decimal(0),
+    prestigePoints: new Decimal(0),
+    prestigeMultiplier: new Decimal(1),
+    upgrades: [],
+    contracts: contracts,
+    achievements: [],
+    stats: {
+      totalClicks: 0,
+      totalTime: 0,
+      maxCodePerSecond: new Decimal(0),
+      contractsCompleted: 0,
+      prestigeCount: 0
+    },
+    lastSave: Date.now()
+  }
+}
 
 export const calculateCodePerSecond = (state: GameState): Decimal => {
   let total = new Decimal(0)
@@ -33,8 +36,11 @@ export const calculateCodePerSecond = (state: GameState): Decimal => {
 }
 
 export const buyUpgrade = (state: GameState, upgradeId: string): GameState => {
-  const upgrade = state.upgrades.find(u => u.id === upgradeId)
-  if (!upgrade || upgrade.owned || upgrade.level >= upgrade.maxLevel) return state
+  const upgradeIndex = state.upgrades.findIndex(u => u.id === upgradeId)
+  if (upgradeIndex === -1) return state
+  
+  const upgrade = state.upgrades[upgradeIndex]
+  if (upgrade.owned || upgrade.level >= upgrade.maxLevel) return state
 
   if (state.code.gte(upgrade.currentCost)) {
     state.code = state.code.minus(upgrade.currentCost)
@@ -52,8 +58,11 @@ export const buyUpgrade = (state: GameState, upgradeId: string): GameState => {
 }
 
 export const acceptContract = (state: GameState, contractId: string): GameState => {
-  const contract = state.contracts.find(c => c.id === contractId)
-  if (!contract || contract.completed || contract.expired) return state
+  const contractIndex = state.contracts.findIndex(c => c.id === contractId)
+  if (contractIndex === -1) return state
+  
+  const contract = state.contracts[contractIndex]
+  if (contract.completed || contract.expired) return state
 
   contract.progress = contract.progress.plus(state.codePerSecond)
   if (contract.progress.gte(contract.requirement)) {

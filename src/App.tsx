@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import MainLayout from './components/Layout/MainLayout'
 import CodeButton from './components/Game/CodeButton'
 import StatsPanel from './components/Game/StatsPanel'
@@ -6,9 +6,9 @@ import UpgradeList from './components/Game/UpgradeList'
 import ContractPanel from './components/Contracts/ContractPanel'
 import TelegramLogin from './components/Telegram/TelegramLogin'
 import UserProfile from './components/Telegram/UserProfile'
-import useGameLoop from './hooks/useGameLoop'
-import useTelegram from './hooks/useTelegram'
-import useLocalStorage from './hooks/useLocalStorage'
+import { useGameLoop } from './hooks/useGameLoop'
+import { useTelegram } from './hooks/useTelegram'
+import { useLocalStorage } from './hooks/useLocalStorage'
 import { buyUpgrade, acceptContract } from './utils/gameLogic'
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
   }, [gameState])
 
   const handleCodeClick = () => {
-    updateGame(prev => ({
+    updateGame((prev: any) => ({
       ...prev,
       code: prev.code.plus(prev.clickPower),
       totalCode: prev.totalCode.plus(prev.clickPower),
@@ -43,11 +43,11 @@ function App() {
   }
 
   const handleBuyUpgrade = (id: string) => {
-    updateGame(prev => buyUpgrade(prev, id))
+    updateGame((prev: any) => buyUpgrade(prev, id))
   }
 
   const handleAcceptContract = (id: string) => {
-    updateGame(prev => acceptContract(prev, id))
+    updateGame((prev: any) => acceptContract(prev, id))
   }
 
   if (!user) {

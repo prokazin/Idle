@@ -60,7 +60,6 @@ export const acceptContract = (state: GameState, contractId: string): GameState 
     contract.completed = true
     state.code = state.code.plus(contract.reward)
     state.stats.contractsCompleted += 1
-    // Обновляем контракты
     state.contracts = generateContracts()
   }
   return state

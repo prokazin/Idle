@@ -11,7 +11,7 @@ export interface TelegramUser {
 export interface TelegramWebApp {
   initData: string
   initDataUnsafe: {
-    user: TelegramUser
+    user?: TelegramUser
   }
   version: string
   platform: string

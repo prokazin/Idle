@@ -14,7 +14,7 @@ export const useTelegram = () => {
   const [webApp, setWebApp] = useState<TelegramWebApp | null>(null)
 
   const initTelegram = () => {
-    if (window.Telegram?.WebApp) {
+    if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
       const app = window.Telegram.WebApp
       setWebApp(app)
       

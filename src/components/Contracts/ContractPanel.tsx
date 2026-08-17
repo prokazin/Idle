@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Contract } from '../../types/game.types'
 import ContractCard from './ContractCard'
-import { formatNumber } from '../../utils/decimalHelper'
 
 interface ContractPanelProps {
   contracts: Contract[]
@@ -15,7 +14,6 @@ const ContractPanel: React.FC<ContractPanelProps> = ({ contracts, onAccept }) =>
     const timer = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 0) {
-          // Обновляем контракты
           return 30
         }
         return prev - 1
@@ -25,11 +23,25 @@ const ContractPanel: React.FC<ContractPanelProps> = ({ contracts, onAccept }) =>
     return () => clearInterval(timer)
   }, [])
 
+  if (!contracts || contracts.length === 0) {
+    return (
+      <div className="space-y-3">
+        <div className="flex justify-between items-center">
+          <h3 className="text-xl font-bold text-[#facc15]">📋 КОНТРАКТЫ</h3>
+          <span className="text-sm text-[#94a3b8]">Обновление через: {timeLeft}с</span>
+        </div>
+        <div className="p-4 text-center text-[#94a3b8] border border-[#94a3b8]/30 rounded-lg">
+          Загрузка контрактов...
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-3">
       <div className="flex justify-between items-center">
-        <h3 className="text-xl font-bold text-cyber-yellow">📋 КОНТРАКТЫ</h3>
-        <span className="text-sm text-cyber-gray">
+        <h3 className="text-xl font-bold text-[#facc15]">📋 КОНТРАКТЫ</h3>
+        <span className="text-sm text-[#94a3b8]">
           Обновление через: {timeLeft}с
         </span>
       </div>

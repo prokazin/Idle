@@ -12,6 +12,9 @@ export interface TelegramWebApp {
   initData: string
   initDataUnsafe: {
     user?: TelegramUser
+    query_id?: string
+    auth_date?: string
+    hash?: string
   }
   version: string
   platform: string
@@ -29,15 +32,8 @@ export interface TelegramWebApp {
   viewportStableHeight: number
   expand: () => void
   close: () => void
+  ready: () => void
   sendData: (data: string) => void
   onEvent: (eventType: string, callback: Function) => void
   offEvent: (eventType: string, callback: Function) => void
-}
-
-export interface LeaderboardEntry {
-  userId: number
-  username: string
-  totalCode: string
-  prestigeLevel: number
-  rank: number
 }

@@ -1,4 +1,4 @@
-import { Decimal } from 'break_eternity.js'
+import Decimal from 'break_eternity.js'
 
 export interface GameState {
   code: Decimal

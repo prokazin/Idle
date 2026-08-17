@@ -1,4 +1,4 @@
-import { Decimal } from 'break_eternity.js'
+import Decimal from 'break_eternity.js'
 
 export const formatNumber = (value: Decimal): string => {
   if (value.lt(1000)) return value.toFixed(0)

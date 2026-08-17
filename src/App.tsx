@@ -9,6 +9,7 @@ import UserProfile from './components/Telegram/UserProfile'
 import useGameLoop from './hooks/useGameLoop'
 import useTelegram from './hooks/useTelegram'
 import useLocalStorage from './hooks/useLocalStorage'
+import { buyUpgrade, acceptContract } from './utils/gameLogic'
 
 function App() {
   const { user, initTelegram } = useTelegram()
@@ -29,6 +30,26 @@ function App() {
     }
   }, [gameState])
 
+  const handleCodeClick = () => {
+    updateGame(prev => ({
+      ...prev,
+      code: prev.code.plus(prev.clickPower),
+      totalCode: prev.totalCode.plus(prev.clickPower),
+      stats: {
+        ...prev.stats,
+        totalClicks: prev.stats.totalClicks + 1
+      }
+    }))
+  }
+
+  const handleBuyUpgrade = (id: string) => {
+    updateGame(prev => buyUpgrade(prev, id))
+  }
+
+  const handleAcceptContract = (id: string) => {
+    updateGame(prev => acceptContract(prev, id))
+  }
+
   if (!user) {
     return <TelegramLogin />
   }
@@ -37,9 +58,11 @@ function App() {
     <MainLayout>
       <UserProfile user={user} />
       <StatsPanel stats={gameState.stats} />
-      <CodeButton onClick={() => updateGame({ code: gameState.code + 1 })} />
-      <UpgradeList upgrades={gameState.upgrades} onBuy={(id) => updateGame({ buyUpgrade: id })} />
-      <ContractPanel contracts={gameState.contracts} onAccept={(id) => updateGame({ acceptContract: id })} />
+      <CodeButton onClick={handleCodeClick} />
+      <UpgradeList upgrades={gameState.upgrades} onBuy={handleBuyUpgrade} />
+      <ContractPanel contracts={gameState.contracts} onAccept={handleAcceptContract} />
     </MainLayout>
   )
 }
+
+export default App

@@ -1,4 +1,5 @@
 import { Decimal } from 'break_eternity.js'
+import { Contract } from './game.types'
 
 export interface ContractTemplate {
   id: string

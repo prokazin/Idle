@@ -1,5 +1,5 @@
+import Decimal from 'break_eternity.js'
 import { GameState } from '../types/game.types'
-import { Decimal } from 'break_eternity.js'
 
 const SAVE_KEY = 'codeTycoonSave'
 

@@ -22,8 +22,8 @@ export const generateContracts = (): Contract[] => {
       expert: 8
     }
     const multiplier = difficultyMultiplier[template.difficulty]
-    const requirement = new Decimal(template.baseRequirement).multipliedBy(multiplier)
-    const reward = new Decimal(template.baseReward).multipliedBy(multiplier)
+    const requirement = new Decimal(template.baseRequirement).times(multiplier)
+    const reward = new Decimal(template.baseReward).times(multiplier)
     
     return {
       id: `contract-${Date.now()}-${index}`,

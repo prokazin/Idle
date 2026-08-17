@@ -29,10 +29,10 @@ export const calculateCodePerSecond = (state: GameState): Decimal => {
   let total = new Decimal(0)
   state.upgrades.forEach(upgrade => {
     if (upgrade.type === 'passive' && upgrade.owned) {
-      total = total.plus(upgrade.effect.multipliedBy(upgrade.level))
+      total = total.plus(upgrade.effect.times(upgrade.level))
     }
   })
-  return total.multipliedBy(state.prestigeMultiplier)
+  return total.times(state.prestigeMultiplier)
 }
 
 export const buyUpgrade = (state: GameState, upgradeId: string): GameState => {
@@ -46,7 +46,7 @@ export const buyUpgrade = (state: GameState, upgradeId: string): GameState => {
     state.code = state.code.minus(upgrade.currentCost)
     upgrade.level += 1
     upgrade.owned = true
-    upgrade.currentCost = upgrade.currentCost.multipliedBy(upgrade.multiplier)
+    upgrade.currentCost = upgrade.currentCost.times(upgrade.multiplier)
 
     if (upgrade.type === 'click') {
       state.clickPower = state.clickPower.plus(upgrade.effect)
